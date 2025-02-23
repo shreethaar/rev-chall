@@ -1,0 +1,43 @@
+Time-based challenges:
+
+1. Challenge Structure:
+- The program contains a flag string that is reveal character by character
+- Each character reveal has an intentional dely
+- The full flag would take too long to reveal during the CTF time limit
+
+2. Key Implementation Features:
+- Uses time.sleep() to create delays between characters
+- Often includes some basic
+- May use stdout.flush() to ensure characters appear one at a time 
+- Sometimes includes anti-debugging measures
+
+3. Common Solution Approaches:
+
+a) Debugger Method:
+
+Attach a debugger like GDB
+Set breakpoints at key functions
+Inspect memory to find the flag string
+Can also modify the program counter to skip sleep calls
+
+b) Memory Analysis:
+
+Scan the process memory while it's running
+Look for patterns that might indicate the flag
+Can use /proc/pid/mem on Linux systems
+
+c) Binary Patching:
+
+Modify the binary to remove or reduce delays
+Replace sleep calls with NOPs
+Patch the binary to reveal the flag immediately
+
+
+Anti-Debug Considerations:
+Some challenges might include:
+
+
+Checksums to detect modification
+Time checks to detect debugging
+ptrace detection
+Sleep obfuscation
