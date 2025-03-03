@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
 // flag3: 1337         --> get current year and minus 688
 void checker(const char* flag) {
     //printf("%s\n",flag);
-    if(strlen(flag) < 22 || strlen(flag) > 24) {
+    if(strlen(flag) < 22 || strlen(flag) > 22) {
         printf("Incorrect Flag\n");
         return;
     }
