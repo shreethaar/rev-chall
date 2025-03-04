@@ -54,6 +54,7 @@ void checker(const char* flag) {
     
     if (valid) {
         printf("Congrats! Correct Flag!\n");
+        printf("FLAG{%s}\n",flag);
     } else {
         printf("Incorrect Flag\n");
     }
