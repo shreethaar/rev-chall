@@ -1,0 +1,65 @@
+- The DLL uses reflective injection to load into a process
+- The real flag is hidden in a resource section and executed as shellcode.
+- Look for API calls related to resource extraction and shellcode execution.
+
+Steps to create challenge:
+
+1. Write the DLL
+- Implement VoidFunc to spawn notepad and display the misleading message box.
+- Embed the obfuscated shellcode in the resource section
+
+2. Generate shellcode
+- Write custom shellcode in assembly to display flag in a message box
+
+3. Compile the DLL
+
+
+
+To solve:
+- dump memory to file using x32dbg in order to get the shellcode 
+
+
+Hints in strings 
+
+
+
+
+
+Pseudocode:
+1. DLL is loaded into the target process (rundll32, Invoke-PE) 
+2. DllMain is called with with DLL_PROCESS_ATTACH
+    - Peform any necessary initialization (if needed)
+    - Return TRUE to indicate successful loading
+
+3. VoidFunc is invoked (either explicitly via reflective injection) 
+    - Display a misleading message box:
+      - Title: "Flag is not here, but I hide it somewhere somehow"
+      - Message: "Click okay to delete all files ... tee-hee :)"
+      - Button: "OK" (no actual file deletion occurs).
+
+4. Inside VoidFunc:
+    - Located the encrypted shellcode in the DLL's resource section:
+        - Use FindResource to locate the resource
+        - Use LoadResource and LockResource to access the resource data 
+        - Retrieve the size of the resource using SizeofResource 
+
+    - Allocate memory for the decrypted shellcode 
+        - Use VirtualAlloc to allocate executable memory (PAGE_EXECUTE_READWRITE). 
+    - Copy the encrypted shellcode into the allocated memory
+    - Decrypt the shellcode with RC4 
+    - Store the decrypted shellcode in the allocated memory 
+        - DO NOT EXECUTE THE SHELLCODE 
+
+5. Misdirect Func (ShowFlag) 
+ - Display a misleading message box:
+    - Title: Bazinga FLAG!!!
+    - Message: "Patience..i am trying to EXTRACT the flag" 
+    - Button: "OK" 
+
+6. Participants analyze the process:
+   - Attach a debugger (e.g., x32dbg) to the target process.
+   - Locate the decrypted shellcode in memory:
+     - Search for the message box strings or XOR-decrypted patterns.
+   - Dump the memory region containing the decrypted shellcode to a file.
+   - Extract the flag:
+     - Analyze the shellcode using scdbg 
