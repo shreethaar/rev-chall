@@ -1,0 +1,20 @@
+// Export sHoWfLaG for hint message 
+__declspec(dllexport) void sHoWfLaG() {
+    // ... (previous code)
+
+    // Extract the encrypted shellcode
+    HRSRC hResource = FindResource(g_hinstDLL, MAKEINTRESOURCE(IDR_SHELLCODE), RT_RCDATA);
+    HGLOBAL hLoaded = LoadResource(g_hinstDLL, hResource);
+    LPVOID pEncryptedShellcode = LockResource(hLoaded);
+    DWORD dwSize = SizeofResource(g_hinstDLL, hResource);
+
+    // Decrypt the shellcode into a writable buffer
+    unsigned char* pDecryptedShellcode = (unsigned char*)malloc(dwSize);
+    dosomething(decryption_key, key_len, pEncryptedShellcode, dwSize, pDecryptedShellcode);
+
+    // ... (use the decrypted shellcode here)
+
+    // Securely erase the decrypted buffer after use
+    RtlSecureZeroMemory(pDecryptedShellcode, dwSize);
+    free(pDecryptedShellcode);
+}
