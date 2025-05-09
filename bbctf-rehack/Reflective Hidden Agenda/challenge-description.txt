@@ -1,0 +1,5 @@
+Challenge Name: Reflective Hidden Agenda
+
+Challenge Description:
+
+Sam, a gamer struggling to level up, finds a DLL named 'Helper.dll' in a gaming forum, promising game-enhancing features. After uploading it to VirusTotal with low detection, Sam loads the DLL into the game, but it only launch Notepad. There’s definitely a hidden agenda at play. Find it before it wipe itself out !
