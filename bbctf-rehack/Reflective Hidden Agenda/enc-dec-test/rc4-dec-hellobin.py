@@ -1,0 +1,19 @@
+from Crypto.Cipher import ARC4
+from binascii import unhexlify
+
+# Encrypted Output (Hex)
+encrypted_hex = "94eb6549e590779223025ddf85f397b0a1c7338255c1d6d09e038f036a3a616ba2e8050682a30546da0b6110f86a7d8d1d2d89d8d46a51cd74743c4b760af026f45a856f83a4df57eb3b706076a48628a7eb682fd326d91c146592381b85f50631e3b3707041606e23ecde4aab0a15e32b83c82a82fc9c8ba08c054976bf48a8597b833e3131e11d10850b8a7a0a0917596b8221da654f67841a218efaf4e81effef40e5866ca5f8b836847ea1352adfcc4439e18f6621ead093b93d48acfd4311a9928d12d22ac3a795a2da5f5e71f23139745d70bc0451726e4aa7972354a17a3b6baf698711ac0ac1eb2176a3a2795faab2e20488dcc6c84b943fb26c4fd312cdff89daadd9"
+encrypted_data = unhexlify(encrypted_hex)
+
+# Generated Key (256-bit)
+key_hex = "8eaf80c9071c6201fb37f69e051818642d7d21e713df3defe30d85b7a1ac1b2f"
+key = unhexlify(key_hex)
+
+# Initialize RC4 cipher with the provided key
+cipher = ARC4.new(key)
+
+# Decrypt the data
+decrypted_data = cipher.decrypt(encrypted_data)
+
+# Print the plaintext (decoded to ASCII)
+print(decrypted_data.decode('utf-8'))
